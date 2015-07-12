@@ -41,6 +41,11 @@ Responsiveness Fixes
 		font-size: 2rem;
 		line-height:2rem;
 	}
+
+	.content_container h3 {
+		font-size: 1.8rem;
+		line-height:1.8rem;
+	}
 	
 	.input-field .prefix {
 		display:none;
@@ -132,6 +137,10 @@ Responsiveness Fixes
 		margin-left:-50%;
 		margin-top:-50%;
 	}
+
+	.iconbox_content h5 {
+  	font-size: 25px;
+	}
 	
 	.navigation_desktop ul li, .menu_bar_navigation ul li { float:right; }	
 	.mockup_container img.mockup_front {position: relative;}
@@ -152,11 +161,26 @@ Responsiveness Fixes
 }
 
 
-@media (min-width: 1200px) and (max-width: 1366px) {
+@media (min-width: 1200px) and (max-width: 1600px) {
 	.mockup.mockup-right img { margin-right:0; width:25rem; }
 	.mockup.mockup-left img { margin-left:0; width:25rem; }
-	.home_mockup_image { top:-10rem;
-						  width: 85%;	 }	
+	.home_content {
+		  margin-top: 0rem;
+		  text-align: left;
+		}
+
+	.home_content h3 {
+		font-size: 1.8rem;
+		 
+		}
+		
+
+	.home_mockup_image { top:-4rem;
+						  width: 75%;}	
+	.slogan{
+		  font-size: 2rem;
+		  line-height: 2.2rem;
+	}					  
 	
 }
 

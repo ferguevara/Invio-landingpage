@@ -928,6 +928,7 @@ iframe {border:none;}
 
 #newsletter {
 	background: url(../images/family-email-module.jpg) no-repeat 0 0 fixed;
+	background-color: #0171BA;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

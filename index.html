@@ -76,17 +76,22 @@
 			<!-- Logo and navigation -->
 		  	<div class="container top_bar" >
 		  		<div class="row">
-		  			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		  			<img src="images/INVIO-white.png" alt="logo" class="logo inviologo"/>
+		  			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		  				<img src="images/INVIO-white.png" alt="logo" class="logo inviologo"/>
+		  			</div>	
+		  			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 		  			<nav class="navigation_desktop">
-		  				<ul>	
-		  					<div class="mobile_nav_open_button hidden-lg hidden-md"  >
-		  							<a href="#contact" id="showRight_1" >
-		  								<div data-icon="&#xe2f3;" class="button_icon close_icon"></div>
+		  				<ul>
+		  					<li>	
+		  						<div class="mobile_nav_open_button hidden-lg hidden-md"  >
+			  							<a href="#contact" id="showRight_1" >
+			  								<div data-icon="&#xe2f3;" class="button_icon close_icon"></div>
 
-		  							</a>
+			  							</a>
 
-		  							</div></li>
+		  						</div>
+
+		  					</li>
 		  				</ul>
 		  			</nav>
 		  			</div>
@@ -102,7 +107,7 @@
 						<h2 class="slogan">
                         finalmente una aplicación que te permite administrar el dinero de las remesas que envías
                         </h2>
-		                <h3><a class="inviovideo fancyvideo fancybox.iframe" href="https://www.youtube.com/embed/qRkrY-KhC5w?autoplay=1&amp;rel=0&amp;showinfo=0&amp;autohide=1">
+		                <h3><a class="inviovideo fancyvideo fancybox.iframe" href="https://www.youtube.com/embed/dTZ_asl2atU?autoplay=1&amp;rel=0&amp;showinfo=0&amp;autohide=1">
 		                        	Ver video<span data-icon="&#xe57b;" class="icon_small blue-icon"></span>
                         	 </a>
                         </h3>
@@ -120,7 +125,7 @@
             		</div>
 					
 					<!-- Mockups-->
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 home_mockup">
+					<div class=" hidden-xs hidden-sm col-md-6 col-lg-6 home_mockup">
 						
 						<img src="images/constructor_migrant.png" alt="" class="mockup-animation2 home_mockup_image">					
 					</div>
@@ -340,18 +345,24 @@ de manera segura</h3>
 
 					<!-- Newsletter Form -->
 		  			<div class="newsletter_form">
-		  				<form action="php/send.php" method="post" id="subscribe-form">
-		  				<div class="input-field">
-		  					<div data-icon="&#xe563;" class="prefix"></div>
-			  				<input id="email" type="email" name="email" class="validate">
-			  				<label for="email">E-mail</label>	
-			  			</div>
-			  			<button class="btn waves-effect waves-light subscribe-submit" type="submit" name="action" id="subscribe-form-submit">Registrar</button>
+			  			<form
+							    id="subscribe-form"
+							    action="http://invio.us11.list-manage.com/subscribe/post-json?u=3faac34c8dda8e7ce523266b0&amp;id=b083dd7b71"
+							            
+							    method="get">
 
-			  			</form>
-			  			<div id="preview">
-			  				<p>Muchas gracias, te mantendremos informado</p>
-			  			</div>
+							    <div class="input-field">
+							    	<div data-icon="&#xe563;" class="prefix"></div>
+							        <input id="email" type="email" name="EMAIL" value="" class="validate">
+					  				<label for="email">E-mail</label>
+							    </div>
+
+							    <button class="btn waves-effect waves-light subscribe-submit" type="submit" name="subscribe" id="subscribe-form-submit" value="Keep Me Updated" >Registrar</button> 
+
+							    <div id="subscribe-result">
+							    </div>
+
+						</form>
 		  			</div>
 		  			<!-- //Newsletter form -->
 
@@ -371,14 +382,14 @@ de manera segura</h3>
 						<div class="social_icons_container align-center">
 						  	<div class="social_icons">
 				                <ul>
-				                    <li><div data-icon="&#xe282;" class="social_icon twitter_icon" onclick="location.href='#'"></div></li>
+				                    <li><div data-icon="&#xe282;" class="social_icon twitter_icon" onclick="location.href='https://twitter.com/inviomobile'"></div></li>
 				                    <li><div data-icon="&#xe281;" class="social_icon facebook_icon" onclick="location.href='https://www.facebook.com/InvioApp'"></div></li>                  
 				                </ul>
 						    </div>
 					    </div>	
 						<!-- //Social Icons -->
 
-					<p><small>© 2015,Invio Inc. Todos los derechos reservados  </small></p>	
+					<p><small>© 2015, Invio Inc. Todos los derechos reservados  </small></p>	
 					</div>
 				</div>				
 			</div>
@@ -423,17 +434,81 @@ de manera segura</h3>
 
 
 	<script type="text/javascript">
-        $('document').ready(function()
-            {
-            $('#subscribe-form').ajaxForm( {
-                target: '#preview',
-                success: function() {       
-                      $('#preview').addClass( "show_message" );
-                    }
-                });
-            });
-    </script>
 
+	    $(document).ready(function(){
+	        ajaxMailChimpForm($("#subscribe-form"), $("#subscribe-result"));
+
+	      
+	        function ajaxMailChimpForm($form, $resultElement){
+
+	            // Hijack the submission. We'll submit the form manually.
+	            $form.submit(function(e) {
+	                e.preventDefault();
+
+	                if (!isValidEmail($form)) {
+	                    var error =  "Debes introducir una dirección de correo electrónico válida";
+	                    $resultElement.html(error);
+	                    $resultElement.css("color", "red");
+	                } else {
+	                    $resultElement.css("color", "white");
+	                    $resultElement.html("Registrando...");
+	                    submitSubscribeForm($form, $resultElement);
+	                }
+	            });
+	        }
+
+	        // Validate the email address in the form
+	        function isValidEmail($form) {
+	            // If email is empty, show error message.
+	            // contains just one @
+	            var email = $form.find("input[type='email']").val();
+	            if (!email || !email.length) {
+	                return false;
+	            } else if (email.indexOf("@") == -1) {
+	                return false;
+	            }
+
+	            return true;
+	        }
+
+	        // Submit the form with an ajax/jsonp request
+	        function submitSubscribeForm($form, $resultElement) {
+	            $.ajax({
+	                type: "GET",
+	                url: $form.attr("action"),
+	                data: $form.serialize(),
+	                cache: false,
+	                dataType: "jsonp",
+	                jsonp: "c", // trigger MailChimp to return a JSONP response
+	                contentType: "application/json; charset=utf-8",
+
+	                error: function(error){
+	                    // According to jquery docs, this is never called for cross-domain JSONP requests
+	                },
+
+	                success: function(data){
+	                    if (data.result != "success") {
+	                        var message = data.msg || "Lo sentimos, no se pudo procesar tu solicitud, inténtelo de nuevo más tarde.";
+	                        $resultElement.css("color", "red");
+
+	                        if (data.msg && data.msg.indexOf("ya estas registrado") >= 0) {
+	                            message = "ya estas registrado, muchas gracias.";
+	                            $resultElement.css("color", "white");
+	                        }
+
+	                        $resultElement.html(message);
+
+	                    } else {
+	                        $resultElement.css("color", "white");
+	                        $resultElement.html("Muchas gracias, por favor confirma tu suscripción en tu bandeja de entrada");
+	                    }
+	                }
+	            });
+	        }
+
+	    });
+
+	</script>
 
 
     <!-- MOBILE NAVIGATION -->
